@@ -1,0 +1,32 @@
+services:
+  app:
+    image: "webapp"
+    ports:
+      - 3000:3000
+    volumes:
+      - db_volume:/data/db
+    environment:
+      - MYSQL_URL=jdbc:mysql://root@database
+    depends_on:
+      - database
+
+  database:
+    image: "mysql"
+    restart: always
+    environment:
+      - MYSQL_USER="root"
+      - MYSQL_PASSWORD=""
+      - MYSQL_ROOT_PASSWORD=""
+      - MYSQL_ALLOW_EMPTY_PASSWORD="yes"
+    ports:
+      - 3306:3306
+#  test:
+#    image: "webapp"
+#    environment:
+#      - API_URL=http://app:3000
+#    depends_on:
+#      - app
+#    command: yarn test
+
+volumes:
+  db_volume:
