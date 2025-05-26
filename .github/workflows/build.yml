@@ -18,11 +18,16 @@
           run: yarn install
         - name: lint
           run: yarn lint
+        - name: Login to Docker Hub
+          uses: docker/login-action@v3
+          with:
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_PASSWORD }}
         - name: Set up Docker Buildx
           uses: docker/setup-buildx-action@v3
         - name: Build and push
           uses: docker/build-push-action@v6
           with:
-            push: false
-            tags: Senneuh/webapp:latest
+            push: true
+            tags: senneuh/webapp:latest
             file: ./Dockerfile
